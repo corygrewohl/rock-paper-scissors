@@ -2,7 +2,19 @@ const r = "rock"
 const p = "paper"
 const s = "scissors"
 
-game(5)
+let computerScore = 0;
+let playerScore = 0;
+// game(5)
+
+const buttons = document.querySelectorAll('button')
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id, computerPlay());
+    })
+})
+
+// playRound("rock", computerPlay())
 
 function computerPlay(){
     let rand = Math.floor(Math.random() * 3) //random integer from 0 - 2
@@ -23,7 +35,11 @@ function playRound(playerSelection, computerSelection){
     }
 
     if(playerSelection == computerSelection){
-        console.log("It's a draw.")
+        const resultDiv = document.querySelector('.results')
+
+        const p = document.createElement('p')
+        p.textContent = 'It\'s a draw!';
+        resultDiv.appendChild(p);
     }
 
     if(playerSelection == r){
@@ -43,11 +59,33 @@ function playRound(playerSelection, computerSelection){
 }
 
 function win(winnerChoice, loserChoice){
-    console.log("You Win! " + winnerChoice +" beats " + loserChoice)
+    playerScore++;
+    document.getElementById('playerCounter').innerHTML = "Player score: " + playerScore;
+
+    const resultDiv = document.querySelector('.results')
+
+    const p = document.createElement('p')
+    p.textContent = 'You Win! ' + winnerChoice + " beats " + loserChoice;
+    resultDiv.appendChild(p);
+
+    if(playerScore >= 5){
+        document.getElementById('winner').innerHTML = "Player has won " + playerScore + " rounds!"
+    }
 }
 
 function lose(winnerChoice, loserChoice){
-    console.log("You Lose! " + winnerChoice + " beats " + loserChoice)
+    computerScore++;
+    document.getElementById('computerCounter').innerHTML = "Computer score: " + computerScore;
+    
+    const resultDiv = document.querySelector('.results')
+
+    const p = document.createElement('p')
+    p.textContent = 'You Lose! ' + winnerChoice + " beats " + loserChoice;
+    resultDiv.appendChild(p);
+
+    if(computerScore >= 5){
+        document.getElementById('winner').innerHTML = "Computer has won " + computerScore + " rounds!"
+    }
 }
 
 function game(numRounds){

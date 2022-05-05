@@ -6,13 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         * {
-            background-color: darkslategray;
+            /* background-color: darkslategray; */
         }
     </style>
-    <script src="rps.js" type="text/javascript"></script>
+    <script src="rps.js" type="text/javascript" defer></script>
     <title>Document</title>
 </head>
 <body>
-    
+    <div>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+
+    <div class="results">
+        <div id="playerCounter"></div>
+        <div id="computerCounter"></div>
+        <div id="winner"></div>
+    </div>
 </body>
 </html>
