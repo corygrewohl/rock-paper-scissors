@@ -35,58 +35,57 @@ function playRound(playerSelection, computerSelection){
     }
 
     if(playerSelection == computerSelection){
-        const resultDiv = document.querySelector('.results')
-
-        const p = document.createElement('p')
-        p.textContent = 'It\'s a draw!';
-        resultDiv.appendChild(p);
+        resultsHandler("draw", r, s)
     }
 
     if(playerSelection == r){
-        if(computerSelection == s) win(r, s)
-        if(computerSelection == p) lose(p, s)
+        if(computerSelection == s) resultsHandler("win", r, s)
+        if(computerSelection == p) resultsHandler("lose", p, r)
     }
 
     if(playerSelection == s){
-        if(computerSelection == p) win(s, p)
-        if(computerSelection == r) lose(r, s)
+        if(computerSelection == p) resultsHandler("win", s, p)
+        if(computerSelection == r) resultsHandler("lose", r, s)
     }
 
     if(playerSelection == p){
-        if(computerSelection == r) win(p, r)
-        if(computerSelection == s) lose(s, p)
+        if(computerSelection == r) resultsHandler("win", p, r)
+        if(computerSelection == s) resultsHandler("lose", s, p)
     }
 }
 
-function win(winnerChoice, loserChoice){
-    playerScore++;
-    document.getElementById('playerCounter').innerHTML = "Player score: " + playerScore;
-
+function resultsHandler(result, winnerChoice, loserChoice){
     const resultDiv = document.querySelector('.results')
-
     const p = document.createElement('p')
-    p.textContent = 'You Win! ' + winnerChoice + " beats " + loserChoice;
-    resultDiv.appendChild(p);
-
-    if(playerScore >= 5){
-        document.getElementById('winner').innerHTML = "Player has won " + playerScore + " rounds!"
-    }
-}
-
-function lose(winnerChoice, loserChoice){
-    computerScore++;
-    document.getElementById('computerCounter').innerHTML = "Computer score: " + computerScore;
     
-    const resultDiv = document.querySelector('.results')
+    switch(result) {
+        case "draw":
+            p.textContent = 'It\'s a draw!';
+            break;
+        case "win":
+            playerScore++;
+            document.getElementById('playerCounter').innerHTML = "Player score: " + playerScore;
 
-    const p = document.createElement('p')
-    p.textContent = 'You Lose! ' + winnerChoice + " beats " + loserChoice;
-    resultDiv.appendChild(p);
+            p.textContent = 'You Win! ' + winnerChoice + " beats " + loserChoice;
 
-    if(computerScore >= 5){
-        document.getElementById('winner').innerHTML = "Computer has won " + computerScore + " rounds!"
+            if(playerScore >= 5){
+                document.getElementById('winner').innerHTML = "Player has won " + playerScore + " rounds!"
+            }
+            break;
+        case "lose":
+            computerScore++;
+            document.getElementById('computerCounter').innerHTML = "Computer score: " + computerScore;
+
+            p.textContent = 'You Lose! ' + winnerChoice + " beats " + loserChoice;
+
+            if(computerScore >= 5){
+                document.getElementById('winner').innerHTML = "Computer has won " + computerScore + " rounds!"
+            }
+            break;
     }
+    resultDiv.appendChild(p);
 }
+
 
 function game(numRounds){
     for(let i = 0; i < numRounds; i++){
