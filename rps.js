@@ -4,7 +4,6 @@ const s = "scissors"
 
 let computerScore = 0;
 let playerScore = 0;
-// game(5)
 
 const buttons = document.querySelectorAll('button')
 
@@ -13,8 +12,6 @@ buttons.forEach((button) => {
         playRound(button.id, computerPlay());
     })
 })
-
-// playRound("rock", computerPlay())
 
 function computerPlay(){
     let rand = Math.floor(Math.random() * 3) //random integer from 0 - 2
@@ -60,40 +57,38 @@ function resultsHandler(result, winnerChoice, loserChoice){
     
     switch(result) {
         case "draw":
-            p.textContent = 'It\'s a draw!';
+            document.getElementById('results').innerHTML = 'It\'s a draw!';
             break;
         case "win":
             playerScore++;
             document.getElementById('playerCounter').innerHTML = "Player score: " + playerScore;
 
-            p.textContent = 'You Win! ' + winnerChoice + " beats " + loserChoice;
+            document.getElementById('results').innerHTML = 'You Win! ' + winnerChoice + " beats " + loserChoice;
 
-            if(playerScore >= 5){
+            if(playerScore == 5){
                 document.getElementById('winner').innerHTML = "Player has won " + playerScore + " rounds!"
+                removeButtons();
             }
             break;
         case "lose":
             computerScore++;
             document.getElementById('computerCounter').innerHTML = "Computer score: " + computerScore;
 
-            p.textContent = 'You Lose! ' + winnerChoice + " beats " + loserChoice;
+            document.getElementById('results').innerHTML = 'You Lose! ' + winnerChoice + " beats " + loserChoice;
 
-            if(computerScore >= 5){
-                document.getElementById('winner').innerHTML = "Computer has won " + computerScore + " rounds!"
+            if(computerScore == 5){
+                document.getElementById('winner').innerHTML = "Computer has won " + computerScore + " rounds!";
+                removeButtons();
             }
             break;
     }
     resultDiv.appendChild(p);
 }
 
+function removeButtons(){
+    const buttons = document.querySelectorAll('button')
 
-function game(numRounds){
-    for(let i = 0; i < numRounds; i++){
-        let playerSelection = prompt("Choose rock, paper, or scissors.");
-        let computerSelection = computerPlay();
-
-        playerSelection = playerSelection.toLowerCase()
-        playRound(playerSelection, computerSelection)
-    }
-
+    buttons.forEach(button => {
+        button.remove();
+    });
 }
